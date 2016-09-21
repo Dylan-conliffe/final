@@ -1,0 +1,51 @@
+body {
+    background-color: white;
+}
+
+
+
+
+nav {
+   display: inline-block;
+    
+}
+
+nav form{
+    float: right;
+}
+
+
+
+img {
+    height: 30px;
+}
+
+div {
+    text-align: center;
+    background-image: url('Concert-crowd.JPG');
+    height: 50%;
+    width: 100%;
+    padding-top: 500px;
+}
+
+button {
+    background-image: url('Concert-crowd.JPG');
+    font-size: 20px;
+}
+
+
+span h1 {
+    text-align: center;
+    font-family: 'creepster', cursive;
+    font-size: 40px;
+    align-items: center;
+}
+
+span p {
+    text-align: center;
+    font-size: 35px;
+    margin: 30px;
+}
+footer{
+   text-align: center;
+}
