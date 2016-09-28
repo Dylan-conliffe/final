@@ -1,41 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="Cypher">
 
 <head>
     <title>Register</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
-    <script src link href="main.js"></script>
+    <script src ="/js/module.js"></script>
+    <script src ="/js/factory.js"></script>
+    <script src ="/js/controller.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Creepster" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="mainstyle.css">
+    <link rel="stylesheet" href="/TheLook/mainstyle.css">
 </head>
 <header>
     <nav>
-        
+
 
     </nav>
 </header>
 
-<body>
-    <div class="container-fluid">
+<body ng-controller="cypherCtrl as cCtrl">
+    <div>
+        <form ng-submit="cCtrl.createUser()">
 
-
-
-        <form>
-            
-            <input type="text" placeholder="email">
-            <input type="text" placeholder=" Username">
-            <input type="text" placeholder=" password">
+            <input type="text" placeholder="email" ng-model="cCtrl.email">
+            <input type="text" placeholder=" Username" ng-model="cCtrl.username">
+            <input type="text" placeholder=" password" ng-model="cCtrl.password" >
             <button type="submit">Get Chypin'</button>
         </form>
 
 </body>
 
-    </div>
-
-        <span>
-                <h1> Why join ?</h1>
+</div>
+<span>
+        <h1> Why join ?</h1>
                 <p> Find yourself staring at a wall having no idea where you want to take your track?
                      get help!
                 </p>
@@ -45,12 +43,13 @@
                 </p>
             </span>
 
-            <footer>
-                <strong>
+<footer>
+    <strong>
                    <address>
    <a href="dyldonomusnyc@gmail.com">Contact me not here.</a>
 </address>
                 </strong>
-             
-            </footer>
+
+</footer>
+
 </html>
