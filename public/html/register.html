@@ -1,37 +1,34 @@
 <!DOCTYPE html>
-<html ng-app="Cypher">
+<html ng-app="app.auth">
 
 <head>
     <title>Register</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
-    <script src ="/js/module.js"></script>
+    
     <script src ="/js/factory.js"></script>
     <script src ="/js/controller.js"></script>
+    
     <link href="https://fonts.googleapis.com/css?family=Creepster" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/TheLook/mainstyle.css">
 </head>
-<header>
-    <nav>
 
 
-    </nav>
-</header>
-
-<body ng-controller="cypherCtrl as cCtrl">
+<body ng-controller="app.auth.controller as auth">
     <div>
-        <form ng-submit="cCtrl.createUser()">
+        <form ng-submit="auth.register.submit($event)">
 
-            <input type="text" placeholder="email" ng-model="cCtrl.email">
-            <input type="text" placeholder=" Username" ng-model="cCtrl.username">
-            <input type="text" placeholder=" password" ng-model="cCtrl.password" >
+            <input type="text" placeholder="email" ng-model=" auth.payload.email">
+            <input type="text" placeholder=" Username" ng-model="auth.payload.username">
+            <input type="password" placeholder=" password" ng-model="auth.payload.password" >
             <button type="submit">Get Chypin'</button>
+            <p> </p>
         </form>
 
+</div>
 </body>
 
-</div>
 <span>
         <h1> Why join ?</h1>
                 <p> Find yourself staring at a wall having no idea where you want to take your track?

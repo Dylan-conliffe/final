@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html ng-app="Cypher">
+<html ng-app="app.auth">
     <head>
         <title>Cyphr</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
-       
+       <script src ="/js/controller.js"></script>
+    
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
         <link href="https://fonts.googleapis.com/css?family=Creepster" rel="stylesheet">
         <link rel="stylesheet" href="/TheLook/main.css">
 </head>
-<header ng-controller= "cypherCtrl as cCtrl">
+<header ng-controller= "app.auth.controller as auth">
   <nav>
         
-        <form>
-            <input type="text" placeholder="Login" >
-            <input type="text" placeholder="Password" >
+        <form ng-submit="auth.login.submit($event)">
+            <input type="email" placeholder="Email"    ng-model="auth.payload.email"  >
+            
+            <input type="text"  placeholder="Username" ng-model="auth.payload.username" >
+            <input type="password"  placeholder="Password" ng-model="auth.payload.password" >
             <button type="submit"> Login </button>
         </form>
 

@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.3.0",
+    "client-sessions": "^0.7.0",
+    "colors": "^1.1.2",
     "ejs": "^2.5.2"
   }
 }
