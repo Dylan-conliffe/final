@@ -1,13 +1,50 @@
-<!DOCTYPE html >
-<html ng-app="">
-    <head>
+<!DOCTYPE html>
+<html ng-app="Cypher">
+
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/TheLook/profile.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
+    <script src="/js/module.js"></script>
+    <script src="/js/users.controller.js"></script>
+
+
+</head>
+
+<body ng-controller ="cypherCtrl as cCtrl">
+
+    <div class="container">
+        <div class="header clearfix">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li ><a href="#/about">About</a></li>
+                    <li ><a href="#/tracks">tracks</a></li>
+                    <li ><a href="#">  frejjhre       </a></li>
+                </ul>
+            </nav>
+            <h3 class="text-muted"> Get Cyphin'</h3>
+        </div>
+
+        <div class="jumbotron">
+            <h1>Profile pic here
+                {{cCtrl.hello}}
+            </h1>
+          
+            
+        </div>
+        <ng-view> 
         
-    </head>
-<body ng-controller="" >
-<h1> <%=  users.name %>   </h1>
-<div>
-    
-</div>
-    
+</ng-view>
+        <footer class="footer">
+            <p>&copy; 2016 Cypher, Your Mama.</p>
+        </footer>
+
+    </div>
+    <!-- /container -->
+
+
 </body>
+
 </html>

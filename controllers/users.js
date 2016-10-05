@@ -1,6 +1,10 @@
 var colors = require('colors');
-var User = require('../model/schema');
-bcrypt = require('bcryptjs');
+var User = require('../model/schema'),
+ bcrypt = require('bcryptjs');
+ 
+
+ 
+ 
  errors = {
         general: {
             status: 500,
@@ -65,7 +69,7 @@ logout:(req,res) => {
                 res.status(500).send(errors.general);
             } else {
                 console.log('New user created in MongoDB:', user);
-                 req.session.user = users;
+                 req.session.user = user;
                 res.send(user);
                 console.log(User)
             }

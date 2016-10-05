@@ -5,5 +5,7 @@ cFactory.$inject = ['$http'];
 
 function cFactory($http){
     function getTracks(){
-        return $http.get('/tracks')
+        return $http.get('/profile/tracks')
+
+
 }};

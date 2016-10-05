@@ -22,8 +22,8 @@ app.set('view engine','ejs');
  app.use(logger('dev'));
  app.use(sessions({
     cookieName:'cypherCookie',
-    secret: '',
-    requestkey: 'session',
+    secret: 'B00tyD3w',
+    requestKey: 'session',
     duration: (86400*1000) *7,
     cookie: {
         ephemeral: false,
