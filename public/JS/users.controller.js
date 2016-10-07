@@ -1,27 +1,21 @@
-
-
-angular.module('Cypher',[])
-    .controller('cypherCtrl',cypherController)
-
+angular.module('Cypher')
+    .controller('cypherCtrl', cypherController)
 
 
 
 
+cypherController.$inject = ['$http','cypherFactory','Upload']
 
-function cypherController(){
+function cypherController($http,cypherFactory,Upload) {
     var cCtrl = this;
+    console.log(cypherController,+ 'loaded')
     cCtrl.hello = "yass! it's working"
+        
+ 
 }
 
 
 
 
 
-//  var s3 = require('s3');
- 
-// var s3Client = s3.createClient({
-//     s3Options :{   
-//         accessKeyId : ' need to change this '  ,
-//         secretAccessKey : 'this too'
-//     }
-// });
+

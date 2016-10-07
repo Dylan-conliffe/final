@@ -1,40 +1,65 @@
-var colors = require('colors');
 var User = require('../model/schema'),
- bcrypt = require('bcryptjs');
- 
+bcrypt = require('bcryptjs'),
+secretShit = require('../secretShit.js'),
+ s3 = require('s3'),
+ s3Client = s3.createClient({
+    s3Options: {
+        accessKeyId: 'secretShit.accessKeyId',
+        secretAccessKey: 'secretShit.secretAcessKey'
+    }
+})
 
- 
- 
- errors = {
-        general: {
-            status: 500,
-            message: 'Backend Error'
-        },
-        login: {
-            status: 403,
-            message: 'Invalid username or password.'
-        }
-    };
+errors = {
+    general: {
+        status: 500,
+        message: 'Backend Error'
+    },
+    login: {
+        status: 403,
+        message: 'Invalid username or password.'
+    }
+};
 
 
 
 module.exports = {
-render: (req,res) => {
-    res.render('index.html',req.session);
-},
-logout:(req,res) => {
-    req.session.user = null;
-    res.redirect('/login');
-},
- login: (req, res) => { // form post submission
+
+      getUser: ('/me',(req,res) =>{
+            res.send(req.sessions.user)
+        }),
+
+    get: (req, res) => {
+        if (req.params.id) {
+            Profileinfo.findOne({
+                _id: req.params.id
+            }).populate('Profileinfo').exec((err, user) => {
+                res.json(user);
+            })
+        } else {
+            Profileinfo.find({}).exec((err, Profileinfo) => {
+                res.json(Profileinfo);
+            });
+        }
+    },
+
+
+
+    render: (req, res) => {
+        res.render('index.html', req.session);
+    },
+    logout: (req, res) => {
+        req.session.user = null;
+        res.redirect('/login');
+    },
+    login: (req, res) => { // form post submission
         User.findOne({
             email: req.body.email
         }, (err, user) => {
-            if( err ) {
+            if (err) {
                 console.error('MongoDB error:'.red, err);
                 res.status(500).json(errors.general);
             }
-            if( !user ) {
+            if (!user) {
                 // forbidden
                 console.warn('No user found!'.yellow);
                 res.status(403).json(errors.login);
@@ -43,42 +68,57 @@ logout:(req,res) => {
                 // at this point, user.password is hashed!
                 bcrypt.compare(req.body.password, user.password, (bcryptErr, matched) => {
                     // matched will be === true || false
-                    if( bcryptErr ) {
+                    if (bcryptErr) {
                         console.error('MongoDB error:'.red, err);
                         res.status(500).json(errors.general);
-                    } else if ( !matched ) {
+                    } else if (!matched) {
                         // forbidden, bad password
                         console.warn('Password did not match!'.yellow);
                         res.status(403).json(errors.login);
                     } else {
-                      //  req.session.user = user; // this is what keeps our user session on the backend!
-                        res.send({ message: 'Login success' });
+                         req.session.user = user; // this is what keeps our user session on the backend!
+                        res.send({
+                            message: 'Login success'
+                        });
                     }
                 });
             }
         });
     },
- register: (req, res) => {
+    register: (req, res) => {
         console.log('Register payload:', req.body);
-   
+
         var newUser = new User(req.body);
 
-        newUser.save((err, user) => {
-            if( err ) {
-                console.log('#ERROR#'.red, 'Could not save new user :(', err);
+        newUser.save(  (err, user) => {
+            if (err) {
+                console.log('#ERROR#'.red, 'Could not save new user ', err);
                 res.status(500).send(errors.general);
             } else {
                 console.log('New user created in MongoDB:', user);
-                 req.session.user = user;
+                req.session.user = user;
                 res.send(user);
                 console.log(User)
             }
         });
-    },
+        var uploader = s3Client.uploadFile({
+                localFile: file.path,
+                s3Params: {
+                    Bucket: 'cyper-user-stuff',
+                    Key: filePath,
+                    ACL: 'public-read',
+                }
+
+            })
+
+
+     },
+
+
     // Auth middleware functions, grouped
     middlewares: {
         session: (req, res, next) => {
-            if( req.session.user ) {
+            if (req.session.user) {
                 console.info('User is logged in, proceeding to dashboard...'.green);
                 next();
             } else {
@@ -86,7 +126,6 @@ logout:(req,res) => {
                 res.redirect('/login');
             }
         }
-    }
-}
+    },
 
-
+};
