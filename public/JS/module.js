@@ -19,5 +19,8 @@ function Router($routeProvider) {
             templateUrl: 'html/templates/aboutyou.html',
             controller: 'cypherCtrl as cCtrl'
         })
-       
+       .when('/edit',{
+           templateUrl: '/html/templates/edit.html',
+           controller: 'cypherCtrl as cCtrl'
+       })
 };

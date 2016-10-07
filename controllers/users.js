@@ -24,9 +24,9 @@ errors = {
 
 module.exports = {
 
-      getUser: ('/me',(req,res) =>{
-            res.send(req.sessions.user)
-        }),
+    //   getUser: ('/me',(req,res) =>{
+    //         res.send(req.sessions.user)
+    //     }),
 
     get: (req, res) => {
         if (req.params.id) {
@@ -48,8 +48,10 @@ module.exports = {
         res.render('index.html', req.session);
     },
     logout: (req, res) => {
-        req.session.user = null;
-        res.redirect('/login');
+        req.session.reset();
+        res.end();
+        res.redirect('/index.html')
+        
     },
     login: (req, res) => { // form post submission
         User.findOne({
@@ -77,6 +79,7 @@ module.exports = {
                         res.status(403).json(errors.login);
                     } else {
                          req.session.user = user; // this is what keeps our user session on the backend!
+                        console.log(req.session.user)
                         res.send({
                             message: 'Login success'
                         });
@@ -98,25 +101,35 @@ module.exports = {
                 console.log('New user created in MongoDB:', user);
                 req.session.user = user;
                 res.send(user);
-                console.log(User)
+                console.log(req.session.user)
             }
         });
-        var uploader = s3Client.uploadFile({
-                localFile: file.path,
-                s3Params: {
-                    Bucket: 'cyper-user-stuff',
-                    Key: filePath,
-                    ACL: 'public-read',
+
+        },
+
+        update: (req,res) =>{
+            console.log('updating user ', req.session.user._id);
+           
+            console.log("USER: ", User);
+           
+            User.findOneAndUpdate({ _id: req.session.user._id }, req.body,{new: true}, function(err, doc){
+                if(err){
+                  console.log("Something wrong when updating data!"); 
                 }
+                console.log(doc);
+                req.session.user = doc;
+                res.send(doc);
+            }); 
+        },
 
-            })
 
+        
+
+    
 
      },
 
-
-    // Auth middleware functions, grouped
-    middlewares: {
+    middlewares : {
         session: (req, res, next) => {
             if (req.session.user) {
                 console.info('User is logged in, proceeding to dashboard...'.green);
@@ -126,6 +139,34 @@ module.exports = {
                 res.redirect('/login');
             }
         }
-    },
+    };
 
-};
+var body = req.body.data
+var file = req.files.files
+var filePath = '/profileSHIT' + (new Date()).getTime() + file.name
+
+
+
+        var uploader = s3Client.uploadFile({
+                localFile: file.path,
+                s3Params: {
+                    Bucket: 'cyper-user-stuff',
+                    Key: filePath,
+                    ACL: 'public-read',
+                }
+
+            })
+        uploader.on('end', function(){
+            var url = s3.getPublicUrlHttp('cypher-user-stuff',filePath)
+            console.log('URL',url)
+            
+            body.pic = url;
+            var User = new User(body);
+            User.save(function(err,doc){
+                res.send(doc)
+            })
+
+
+    // Auth middleware functions, grouped
+
+});

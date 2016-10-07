@@ -5,9 +5,14 @@ bcrypt = require('bcryptjs')
  
  
  userSchema =  new mongoose.Schema({
-    username:  String,
-    password:  String,
-    email:     String,
+    username:   String,
+    password:   String , 
+    email:    String,
+    pic: String,
+   about: String,
+   artist: String,
+   role: String,
+   software: String,
     created: {
         type: Number,
         default: () => Date.now()

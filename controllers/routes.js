@@ -28,9 +28,13 @@ module.exports = function routes(app) {
             })
 
         app.get('/me',(req,res) =>{
-            res.send(req.sessions.user)
+           res.send(req.session.user)
+           //res.send('HELLO')
         })
         
+        app.post('/updateProfile',Auth.update)
+
+
         app.get('/logout',(req,res) =>{
             res.sendFile('index.html') , {
                 root: './public/html/'

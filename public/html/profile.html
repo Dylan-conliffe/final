@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.0.1/ng-file-upload.js"></script>
     <script src="/js/module.js"></script>
-    <script src  ="/js/factory.js"></script>
+   
     <script src="/js/users.controller.js"></script>
 
 
@@ -23,6 +23,7 @@
                 <ul class="nav nav-pills pull-right">
                     <li><a href="#/about">About</a></li>
                     <li><a href="#/tracks">tracks</a></li>
+                    <li><a href="#/edit">Edit</a></li>
                     <li><a href="#/logout"> Log out </a></li>
                 </ul>
             </nav>
@@ -31,7 +32,7 @@
 
         <div class="jumbotron">
             <h1> {{cCtrl.hello}}
-                <input type="file" ngf-select="">
+                {{cCtrl.pic}}
             </h1>
 
 
