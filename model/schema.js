@@ -2,39 +2,39 @@ const SALTY_BITS = 10;
 var mongoose = require('mongoose')
 
 bcrypt = require('bcryptjs')
- 
- 
- userSchema =  new mongoose.Schema({
-    username:   String,
-    password:   String , 
-    email:    String,
-    pic: String,
-   about: String,
-   artist: String,
-   role: String,
-   software: String,
+
+
+userSchema = new mongoose.Schema({
+    username: String,
+    password: String,
+    email: String,
+    pic: {type : mongoose.Schema.ObjectId, ref : "Profile"},
+    about: String,
+    artist: String,
+    role: String,
+    software: String,
     created: {
         type: Number,
         default: () => Date.now()
     }
 });
 
-userSchema.pre('save', function(next) { 
+userSchema.pre('save', function (next) {
     var user = this;
-  
-    if( !user.isModified('password') ) {
+
+    if (!user.isModified('password')) {
         return next();
     }
     // generate a salt value to encrypt our password
     bcrypt.genSalt(SALTY_BITS, (saltErr, salt) => { // used to guarentee uniqueness
-        if(saltErr) {
+        if (saltErr) {
             return next(saltErr);
         }
         console.info('SALT generated!');
 
         // now let's hash this bad boy!
         bcrypt.hash(user.password, salt, (hashErr, hashedPassword) => {
-            if( hashErr ) {
+            if (hashErr) {
                 return next(hashErr);
             }
             // over-ride the plain text password with the hashed one
@@ -45,4 +45,4 @@ userSchema.pre('save', function(next) {
 });
 
 
-module.exports = mongoose.model('user',userSchema,'users');
+module.exports = mongoose.model('user', userSchema, 'users');

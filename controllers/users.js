@@ -1,13 +1,5 @@
 var User = require('../model/schema'),
-bcrypt = require('bcryptjs'),
-secretShit = require('../secretShit.js'),
- s3 = require('s3'),
- s3Client = s3.createClient({
-    s3Options: {
-        accessKeyId: 'secretShit.accessKeyId',
-        secretAccessKey: 'secretShit.secretAcessKey'
-    }
-})
+    bcrypt = require('bcryptjs');
 
 errors = {
     general: {
@@ -24,9 +16,7 @@ errors = {
 
 module.exports = {
 
-    //   getUser: ('/me',(req,res) =>{
-    //         res.send(req.sessions.user)
-    //     }),
+
 
     get: (req, res) => {
         if (req.params.id) {
@@ -50,8 +40,8 @@ module.exports = {
     logout: (req, res) => {
         req.session.reset();
         res.end();
-        res.redirect('/index.html')
-        
+        res.sendFile('/')
+
     },
     login: (req, res) => { // form post submission
         User.findOne({
@@ -78,7 +68,7 @@ module.exports = {
                         console.warn('Password did not match!'.yellow);
                         res.status(403).json(errors.login);
                     } else {
-                         req.session.user = user; // this is what keeps our user session on the backend!
+                        req.session.user = user; // this is what keeps our user session on the backend!
                         console.log(req.session.user)
                         res.send({
                             message: 'Login success'
@@ -93,7 +83,7 @@ module.exports = {
 
         var newUser = new User(req.body);
 
-        newUser.save(  (err, user) => {
+        newUser.save((err, user) => {
             if (err) {
                 console.log('#ERROR#'.red, 'Could not save new user ', err);
                 res.status(500).send(errors.general);
@@ -105,31 +95,30 @@ module.exports = {
             }
         });
 
-        },
+    },
 
-        update: (req,res) =>{
-            console.log('updating user ', req.session.user._id);
-           
-            console.log("USER: ", User);
-           
-            User.findOneAndUpdate({ _id: req.session.user._id }, req.body,{new: true}, function(err, doc){
-                if(err){
-                  console.log("Something wrong when updating data!"); 
-                }
-                console.log(doc);
-                req.session.user = doc;
-                res.send(doc);
-            }); 
-        },
+    update: (req, res) => {
+        console.log('updating user ', req.session.user._id);
 
+        // console.log("USER: ", User);
 
-        
-
+        User.findOneAndUpdate({
+            _id: req.session.user._id
+        }, req.body, {
+            new: true
+        }, function (err, doc) {
+            if (err) {
+                console.log("Something wrong when updating data!");
+            }
+            console.log(doc);
+            req.session.user = doc;
+            res.send(doc);
+            console.log(req.body);
+        });
+    },
     
 
-     },
-
-    middlewares : {
+ middlewares: {
         session: (req, res, next) => {
             if (req.session.user) {
                 console.info('User is logged in, proceeding to dashboard...'.green);
@@ -139,34 +128,11 @@ module.exports = {
                 res.redirect('/login');
             }
         }
-    };
-
-var body = req.body.data
-var file = req.files.files
-var filePath = '/profileSHIT' + (new Date()).getTime() + file.name
+    },
+    
 
 
 
-        var uploader = s3Client.uploadFile({
-                localFile: file.path,
-                s3Params: {
-                    Bucket: 'cyper-user-stuff',
-                    Key: filePath,
-                    ACL: 'public-read',
-                }
 
-            })
-        uploader.on('end', function(){
-            var url = s3.getPublicUrlHttp('cypher-user-stuff',filePath)
-            console.log('URL',url)
-            
-            body.pic = url;
-            var User = new User(body);
-            User.save(function(err,doc){
-                res.send(doc)
-            })
+};
 
-
-    // Auth middleware functions, grouped
-
-});
