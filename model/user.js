@@ -1,19 +1,16 @@
 const SALTY_BITS = 10;
-var mongoose = require('mongoose')
 
-bcrypt = require('bcryptjs')
-
+var mongoose = require('mongoose'),
+    bcrypt = require('bcryptjs');
 
 userSchema = new mongoose.Schema({
     username: String,
     password: String,
     email: String,
-    pic: String,
     about: String,
     artist: String,
     role: String,
     software: String,
-    tracks: String,
     created: {
         type: Number,
         default: () => Date.now()
@@ -44,6 +41,5 @@ userSchema.pre('save', function (next) {
         });
     });
 });
-
 
 module.exports = mongoose.model('user', userSchema, 'users');

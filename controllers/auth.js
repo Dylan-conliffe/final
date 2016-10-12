@@ -1,4 +1,4 @@
-var User = require('../model/schema'),
+var User = require('../model/user'),
     bcrypt = require('bcryptjs');
 
 errors = {
@@ -12,36 +12,10 @@ errors = {
     }
 };
 
-
-
 module.exports = {
-
-
-
-    get: (req, res) => {
-        if (req.params.id) {
-            Profileinfo.findOne({
-                _id: req.params.id
-            }).populate('Profileinfo').exec((err, user) => {
-                res.json(user);
-            })
-        } else {
-            Profileinfo.find({}).exec((err, Profileinfo) => {
-                res.json(Profileinfo);
-            });
-        }
-    },
-
-
-
-    render: (req, res) => {
-        res.sendFile('index.html', req.session);
-    },
     logout: (req, res) => {
         req.session.reset();
-        res.end();
-       // res.sendFile('/')
-
+        res.redirect('/');
     },
     login: (req, res) => { // form post submission
         User.findOne({
@@ -96,28 +70,6 @@ module.exports = {
         });
 
     },
-
-    update: (req, res) => {
-        console.log('updating user ', req.session.user._id);
-
-         console.log("USERsss: ", User);
-
-        User.findOneAndUpdate({
-            _id: req.session.user._id
-        }, req.body, {
-            new: true
-        }, function (err, doc) {
-            if (err) {
-                console.log("Something wrong when updating data!".pink);
-            }
-            console.log(doc.green);
-            req.session.user = doc;
-            res.send(doc);
-            console.log(req.session.user.yellow);
-        });
-    },
-
-
     middlewares: {
         session: (req, res, next) => {
             if (req.session.user) {
@@ -128,10 +80,5 @@ module.exports = {
                 res.redirect('/login');
             }
         }
-    },
-
-
-
-
-
+    }
 };
