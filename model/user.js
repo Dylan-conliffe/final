@@ -11,6 +11,7 @@ userSchema = new mongoose.Schema({
     artist: String,
     role: String,
     software: String,
+    file : {type : mongoose.Schema.ObjectId, ref : "file"},
     created: {
         type: Number,
         default: () => Date.now()

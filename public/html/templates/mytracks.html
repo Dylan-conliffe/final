@@ -1,3 +1,9 @@
-<h4> Tracks  </h4>  
 
-<input type="file"  ngf-select=" " ngf-accept="'file/*'" ngf-pattern="'file/*'" ng-model="cCtrl.tracks">
+  <form ng-submit='cCtrl.addTracks()'>
+    <h4> add track </h4>
+    <input type="file" ngf-select=" " ngf-accept="'file/*'" ngf-pattern="'file/*'" ng-model="cCtrl.tracks">
+    <h4>Name of track </h4>
+    <input type="text" ng-model="cCtrl.name" placeholder=" name">
+
+    <button> Save </button>
+  </form>

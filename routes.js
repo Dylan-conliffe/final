@@ -19,6 +19,7 @@ module.exports = function routes(app) {
     app.get('/profile', Profile.render);
     app.get('/profile/files', Profile.getFiles);
     app.post('/profile/edit', multiparty, Profile.edit);
+    app.post('/profile/tracks',multiparty,Profile.edit);
     //
     // ─── AUTH ROUTES ───────────────────────────────────────────────────────────────────────
     //

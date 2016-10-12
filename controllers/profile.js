@@ -76,7 +76,7 @@ ProfileController = {
                     });
                 } else {
                     console.info('NEW FILE BITCHES!', newFile);
-                    ProfileController.update(req, res);
+                   ProfileController.update(req, res);
                 }
             });
             // We will save the s3 URL using File
