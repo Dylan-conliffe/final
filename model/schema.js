@@ -8,11 +8,12 @@ userSchema = new mongoose.Schema({
     username: String,
     password: String,
     email: String,
-    pic: {type : mongoose.Schema.ObjectId, ref : "Profile"},
+    pic: String,
     about: String,
     artist: String,
     role: String,
     software: String,
+    tracks: String,
     created: {
         type: Number,
         default: () => Date.now()

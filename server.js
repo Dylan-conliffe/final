@@ -15,7 +15,7 @@ mongoose.connect('mongodb://localhost/Cypher', function (error) {
     if (error) {
         console.error('I can not run fam', error);
     } else {
-        console.log('good shit...DB is up');
+        console.log('good shit...DB is up' .rainbow);
     }
 });
 

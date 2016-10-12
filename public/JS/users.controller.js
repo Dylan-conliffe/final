@@ -15,7 +15,7 @@ function cypherController($http, Upload) {
             url: '/profile/edit',
             method: "POST",
             data: {
-                files: cCtrl.pic,
+                files: cCtrl.pic ,
                 data: {
                     about: cCtrl.about,
                     role: cCtrl.role,
@@ -24,26 +24,26 @@ function cypherController($http, Upload) {
                 }
             }
         }).then(function (response) {
-            console.log("updated user: ", response)
-        }, function(error) {
-            console.error(error);
+            console.log("updated user: ", response);
+        }, function (error) {
+           // console.error(error,'yo',req.session.user);
         });
     }
 
     cCtrl.getProfile = function () {
 
         $http.get('/me').then(function (response) {
-           // console.log("Profile data: ", response.data);
-
-            cCtrl.pic = response.data.pic;
-            cCtrl.about = response.data.about;
-            cCtrl.role = response.data.role;
-            cCtrl.artist = response.data.artist;
-            cCtrl.software = response.data.software;
-            console.log(cCtrl.pic)
-          
+            // // console.log("Profile data: ", response.data);
+            // cCtrl.tracks = response.data.tracks
+            // cCtrl.pic = response.data.pic;
+            // cCtrl.about = response.data.about;
+            // cCtrl.role = response.data.role;
+            // cCtrl.artist = response.data.artist;
+            // cCtrl.software = response.data.software;
+            // // console.log(response.data.software)
+              //  console.log(cCtrl.about)
         })
     }
 
-  
- }
+
+}

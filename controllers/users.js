@@ -35,12 +35,12 @@ module.exports = {
 
 
     render: (req, res) => {
-        res.render('index.html', req.session);
+        res.sendFile('index.html', req.session);
     },
     logout: (req, res) => {
         req.session.reset();
         res.end();
-        res.sendFile('/')
+       // res.sendFile('/')
 
     },
     login: (req, res) => { // form post submission
@@ -69,7 +69,7 @@ module.exports = {
                         res.status(403).json(errors.login);
                     } else {
                         req.session.user = user; // this is what keeps our user session on the backend!
-                        console.log(req.session.user)
+                        console.log(req.session.user,'user?' .yellow)
                         res.send({
                             message: 'Login success'
                         });
@@ -91,7 +91,7 @@ module.exports = {
                 console.log('New user created in MongoDB:', user);
                 req.session.user = user;
                 res.send(user);
-                console.log(req.session.user)
+                // console.log(req.session.users .cyan)
             }
         });
 
@@ -100,7 +100,7 @@ module.exports = {
     update: (req, res) => {
         console.log('updating user ', req.session.user._id);
 
-        // console.log("USER: ", User);
+         console.log("USERsss: ", User);
 
         User.findOneAndUpdate({
             _id: req.session.user._id
@@ -108,17 +108,17 @@ module.exports = {
             new: true
         }, function (err, doc) {
             if (err) {
-                console.log("Something wrong when updating data!");
+                console.log("Something wrong when updating data!".pink);
             }
-            console.log(doc);
+            console.log(doc.green);
             req.session.user = doc;
             res.send(doc);
-            console.log(req.body);
+            console.log(req.session.user.yellow);
         });
     },
-    
 
- middlewares: {
+
+    middlewares: {
         session: (req, res, next) => {
             if (req.session.user) {
                 console.info('User is logged in, proceeding to dashboard...'.green);
@@ -129,10 +129,9 @@ module.exports = {
             }
         }
     },
-    
+
 
 
 
 
 };
-

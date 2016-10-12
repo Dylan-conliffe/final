@@ -1,8 +1,6 @@
  var mongoose = require('mongoose');
 
  userSchema = new mongoose.Schema({
-   
-   tracks: String,
   
  });
 
