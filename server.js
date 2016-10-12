@@ -1,6 +1,6 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
-    routes = require('./controllers/routes.js'),
+    routes = require('./routes'),
     mongoose = require('mongoose'),
     logger = require('morgan'),
     ejs = require('ejs'),
